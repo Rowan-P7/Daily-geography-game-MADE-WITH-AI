@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101815">
+  <meta name="description" content="A fresh little geography challenge, every day. Ten questions. One shared world.">
+  <title>Atlas — A daily geography game</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <script src="{{ url_for('static', filename='js/app.js') }}" defer></script>
+</head>
+<body>
+  <div class="shell">
+    <header class="topbar">
+      <a class="brand" href="#" data-view="home" aria-label="Atlas home">
+        <span class="brand-mark" aria-hidden="true"><span></span><span></span><span></span></span>
+        <span>atlas<span class="brand-period">.</span></span>
+      </a>
+      <nav class="main-nav" aria-label="Main navigation">
+        <button class="nav-link active" data-view="home">Today</button>
+        <button class="nav-link" data-action="practice">Practice</button>
+        <button class="nav-link" data-view="stats">Your stats</button>
+      </nav>
+      <div class="top-actions">
+        <button class="icon-button" id="help-button" aria-label="How to play" title="How to play">?</button>
+        <button class="icon-button" id="sound-button" aria-label="Toggle sound" title="Toggle sound">♫</button>
+        <div class="streak-chip" title="Current daily streak"><span aria-hidden="true">✦</span><strong id="header-streak">0</strong><span>day streak</span></div>
+      </div>
+    </header>
+
+    <main>
+      <section id="home-view" class="view">
+        <div class="home-grid">
+          <div class="hero-copy">
+            <p class="eyebrow"><span class="live-dot"></span> THE DAILY ATLAS · <span id="today-date">YOUR DAILY EXPLORATION</span></p>
+            <h1>A little more<br>worldly, <em>every day.</em></h1>
+            <p class="hero-description">Seven different geography games. One shared challenge. How well can you read the world?</p>
+            <div class="hero-actions">
+              <button class="button button-primary" id="play-button">Play today's challenge <span aria-hidden="true">↗</span></button>
+              <span class="play-note">7 mini-games <span>·</span> about 5 minutes</span>
+            </div>
+            <div class="daily-status">
+              <span class="status-icon" id="status-icon">◎</span>
+              <span id="daily-status-text">Today's challenge is ready when you are.</span>
+              <span class="status-divider"></span>
+              <span>Next map in <strong id="countdown">--:--:--</strong></span>
+            </div>
+          </div>
+          <div class="world-art" aria-label="Stylized world map illustration">
+            <div class="art-label art-label-top"><span class="tiny-star">✳</span> YOUR WORLD, IN SEVEN</div>
+            <svg class="world-map" viewBox="0 0 640 420" role="img" aria-label="Abstract dotted world map">
+              <defs>
+                <pattern id="dots" width="13" height="13" patternUnits="userSpaceOnUse">
+                  <circle cx="2.2" cy="2.2" r="1.8" fill="#728477" opacity=".58"/>
+                </pattern>
+                <linearGradient id="glow" x1="0" x2="1" y1="0" y2="1">
+                  <stop offset="0" stop-color="#dbf47f" stop-opacity=".85"/>
+                  <stop offset="1" stop-color="#7f9b72" stop-opacity=".2"/>
+                </linearGradient>
+              </defs>
+              <path class="map-shape" d="M75 110l19-32 44-19 53 4 25 25 40 2 23 24-11 20-30 4-14 27-32 16-23 39-23-8-13-34-27-13-14-28-28-8-12-19zm146 91l22-8 26 12 19 39-8 39-17 33-15 35-20-10-10-37-17-20 1-30 12-22 7-31zm97-135l39-20 31 11 26-9 49 18 10 18-21 11-27-6-13 25-32 8-11 35-17 11-5 34-28 16-22-21 12-30-14-26 13-27-20-22 10-25zm102 150l26-11 28 15 28 5 15 21-14 13-34-4-10-20-28-4-11-15zm82-82l25-9 25 7 11 14-21 13-28-8-12-17z"/>
+              <path class="map-outline" d="M75 110l19-32 44-19 53 4 25 25 40 2 23 24-11 20-30 4-14 27-32 16-23 39-23-8-13-34-27-13-14-28-28-8-12-19zm146 91l22-8 26 12 19 39-8 39-17 33-15 35-20-10-10-37-17-20 1-30 12-22 7-31zm97-135l39-20 31 11 26-9 49 18 10 18-21 11-27-6-13 25-32 8-11 35-17 11-5 34-28 16-22-21 12-30-14-26 13-27-20-22 10-25zm102 150l26-11 28 15 28 5 15 21-14 13-34-4-10-20-28-4-11-15z"/>
+              <circle class="map-point" cx="369" cy="176" r="5"/>
+              <circle class="map-point map-point-secondary" cx="200" cy="135" r="4"/>
+              <circle class="map-point map-point-secondary" cx="430" cy="250" r="4"/>
+              <circle class="map-ring" cx="369" cy="176" r="17"/>
+              <path class="map-route" d="M200 135Q280 60 369 176T430 250"/>
+            </svg>
+            <div class="art-label art-label-bottom"><span>↗</span> SOMEWHERE NEW, EVERY DAY</div>
+            <span class="art-coordinate">20° N&nbsp; / &nbsp;15° E</span>
+          </div>
+        </div>
+        <div class="stats-strip">
+          <div><span class="strip-label">YOUR STREAK</span><strong><span id="home-streak">0</span><small> days</small></strong><span class="strip-foot">Show up, keep it going</span></div>
+          <div><span class="strip-label">CHALLENGES PLAYED</span><strong id="home-games">0</strong><span class="strip-foot">Every day is a new map</span></div>
+          <div><span class="strip-label">PERSONAL BEST</span><strong id="home-best">—</strong><span class="strip-foot">Out of 8,250 points</span></div>
+          <div class="quote-stat"><span class="quote-mark">“</span><p>The more of the world you know, the bigger it gets.</p><span class="quote-credit">— A NOTE FROM ATLAS</span></div>
+        </div>
+        <div class="home-lower">
+          <div class="section-intro"><div><p class="eyebrow">HOW IT WORKS</p><h2>A world of puzzles.<br><em>One day at a time.</em></h2></div><p>Play at your own pace. Come back tomorrow for a fresh rotation. Everyone gets the same seven rounds.</p></div>
+          <div class="feature-row">
+            <article class="feature-card"><span class="feature-number">01</span><span class="feature-icon">◷</span><h3>Seven, every day</h3><p>From mystery countries and outlines to estimates, flags and borders.</p></article>
+            <article class="feature-card"><span class="feature-number">02</span><span class="feature-icon">◎</span><h3>Learn as you go</h3><p>Every answer comes with a little context worth remembering.</p></article>
+            <article class="feature-card"><span class="feature-number">03</span><span class="feature-icon">↗</span><h3>Make it a ritual</h3><p>Build your streak, compare with friends, explore a little more.</p></article>
+          </div>
+        </div>
+      </section>
+
+      <section id="game-view" class="view hidden">
+        <div class="game-topline"><button class="text-button" id="leave-game">← Back to today</button><span class="game-mode-label" id="game-mode-label">TODAY'S CHALLENGE</span><span class="game-score">SCORE <strong id="game-score">0</strong></span></div>
+        <div class="game-card">
+          <div class="question-meta"><span id="question-category">MYSTERY COUNTRY</span><span class="difficulty" id="question-difficulty">EASY</span><span class="question-number" id="question-number">01 / 07</span></div>
+          <div class="progress-track"><div id="progress-bar"></div></div>
+          <div id="question-media" class="question-media hidden"></div>
+          <h1 id="question-text">Loading your question…</h1>
+          <p class="question-hint" id="question-hint">A new kind of geography puzzle each round.</p>
+          <div id="round-stage" class="round-stage hidden"></div>
+          <div id="answer-options" class="answer-options" role="group" aria-label="Answer options"></div>
+          <div id="feedback" class="feedback hidden" aria-live="polite"></div>
+          <div class="game-bottom"><button class="text-button report-button" id="report-button">⚑ &nbsp;Report a question</button><button class="button button-primary" id="submit-button" disabled>Lock in answer <span aria-hidden="true">↗</span></button><button class="button button-primary hidden" id="next-button">Continue <span aria-hidden="true">→</span></button></div>
+          <p class="keyboard-hint">TIP: USE <kbd>TAB</kbd> TO MOVE, <kbd>ENTER</kbd> TO SUBMIT</p>
+        </div>
+      </section>
+
+      <section id="results-view" class="view hidden">
+        <div class="results-heading"><p class="eyebrow">THE DAILY ATLAS · <span id="result-date"></span></p><h1>Well <em>explored.</em></h1><p id="result-subtitle">A little more of the world, tucked away.</p></div>
+        <div class="result-score-card"><span class="strip-label" id="result-context">TODAY'S SCORE</span><strong id="result-score">0</strong><span class="result-max" id="result-max">/ 8,250 points</span><div class="result-grade" id="result-grade">WORLD CLASS</div></div>
+        <div class="result-metrics"><div><span>Correct</span><strong id="result-correct">0 / 10</strong></div><div><span>Accuracy</span><strong id="result-accuracy">0%</strong></div><div><span>Time explored</span><strong id="result-time">0:00</strong></div><div><span>Current streak</span><strong id="result-streak">0 days</strong></div></div>
+        <div class="result-detail"><div class="section-title"><div><p class="eyebrow">YOUR JOURNEY</p><h2>Question by question</h2></div><button class="button button-outline" id="share-button">Share your result ↗</button></div><div id="answer-review" class="answer-review"></div></div>
+        <div class="result-actions"><button class="button button-primary" data-view="stats">See your stats <span>↗</span></button><button class="text-button" data-view="home">Back to today</button></div>
+      </section>
+
+      <section id="stats-view" class="view hidden">
+        <div class="stats-heading"><p class="eyebrow">YOUR ATLAS</p><h1>A map of <em>showing up.</em></h1><p>Your daily challenges, all in one place. Practice rounds stay out of your stats.</p></div>
+        <div class="stat-cards">
+          <article><span>CHALLENGES PLAYED</span><strong id="stat-games">0</strong><small>Daily explorations completed</small></article>
+          <article><span>AVERAGE SCORE</span><strong id="stat-average">0</strong><small>Points per daily challenge</small></article>
+          <article><span>PERSONAL BEST</span><strong id="stat-best">0</strong><small>Your highest daily score</small></article>
+          <article><span>ANSWER ACCURACY</span><strong id="stat-accuracy">0%</strong><small>Across all daily questions</small></article>
+        </div>
+        <div class="stats-columns"><div class="panel calendar-panel"><div class="section-title"><div><p class="eyebrow">THE LAST 35 DAYS</p><h2>Your daily map</h2></div><span class="calendar-legend"><i></i> Played</span></div><div class="calendar-weekdays"><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span><span>S</span></div><div id="calendar" class="calendar-grid"></div><p class="calendar-note">A filled point means you completed that day's challenge.</p><div class="history-heading"><span>DAILY SCORE HISTORY</span><span>OUT OF 8,250</span></div><div id="score-history" class="score-history" role="img" aria-label="Daily score history for the last 35 days"></div></div>
+          <div class="panel streak-panel"><p class="eyebrow">KEEP EXPLORING</p><div class="streak-big"><span>✦</span><strong id="stat-streak">0</strong></div><h2>Day streak</h2><p>Play today's challenge to keep your streak alive. Your longest run is <strong id="stat-longest">0 days</strong>.</p><div class="streak-divider"></div><div class="leaderboard-title"><div><p class="eyebrow">TODAY'S EXPLORERS</p><h3>Daily leaderboard</h3></div><span>TOP 10</span></div><div id="leaderboard" class="leaderboard"><p class="empty-leaderboard">Complete today's challenge to join the board.</p></div></div>
+        </div>
+      </section>
+    </main>
+    <footer><span class="footer-brand">atlas<span>.</span></span><span>Made for the endlessly curious.</span><span>All challenges reset at midnight UTC.</span></footer>
+  </div>
+
+  <dialog id="practice-dialog" class="modal">
+    <button class="modal-close" data-close-dialog aria-label="Close">×</button><p class="eyebrow">PICK YOUR PRACTICE</p><h2>Choose a mini-game</h2><p>Unlimited rounds. Practice never changes your daily stats or streak.</p>
+    <form id="practice-form">
+      <label for="practice-type">Mini-game</label><select id="practice-type" required></select>
+      <label for="practice-difficulty">Difficulty</label><select id="practice-difficulty" required><option value="easy">Easy</option><option value="medium" selected>Medium</option><option value="hard">Hard</option><option value="expert">Expert</option></select>
+      <button class="button button-primary" type="submit">Start practice ↗</button>
+    </form>
+  </dialog>
+  <dialog id="help-dialog" class="modal">
+    <button class="modal-close" data-close-dialog aria-label="Close">×</button><p class="eyebrow">A QUICK FIELD GUIDE</p><h2>How to play</h2>
+    <p>Every day brings seven rounds drawn from eight geography mini-games. Everyone gets the same UTC-dated challenge, with a different mix of mechanics and difficulty.</p>
+    <div class="modal-rule"></div><p><strong>Scoring:</strong> Rounds are worth up to 1,000 base points, with speed bonuses where appropriate. Solve mystery countries with fewer clues, get closer with estimates, and find more correct flags or neighbours for partial credit. Consecutive correct rounds add a combo bonus.</p>
+    <p><strong>Your daily attempt:</strong> You can pause and come back, but you only get one daily run. Practice is unlimited and never changes your streak or stats.</p>
+    <p><strong>Keyboard:</strong> Use Tab to move between controls and Enter to submit or continue. Use 1–4 for any conventional multiple-choice questions.</p>
+    <button class="button button-primary" data-close-dialog>Got it</button>
+  </dialog>
+  <dialog id="report-dialog" class="modal">
+    <button class="modal-close" data-close-dialog aria-label="Close">×</button><p class="eyebrow">HELP US KEEP IT ACCURATE</p><h2>Report this question</h2><p>Tell us what seems wrong and we'll log it for review.</p>
+    <form id="report-form"><label for="report-message">What should we check?</label><textarea id="report-message" minlength="5" maxlength="500" required placeholder="Share a little detail…"></textarea><p id="report-status" class="report-status" aria-live="polite"></p><button class="button button-primary" type="submit">Send report ↗</button></form>
+  </dialog>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+</body>
+</html>
